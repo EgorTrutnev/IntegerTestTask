@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegerTestTask", "IntegerTestTask\IntegerTestTask.csproj", "{66F85160-AEEC-4596-B5B7-05F2773A9AD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66F85160-AEEC-4596-B5B7-05F2773A9AD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F85160-AEEC-4596-B5B7-05F2773A9AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F85160-AEEC-4596-B5B7-05F2773A9AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F85160-AEEC-4596-B5B7-05F2773A9AD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {394F9A5C-A6B4-42C4-B685-380A8D67A54E}
+	EndGlobalSection
+EndGlobal

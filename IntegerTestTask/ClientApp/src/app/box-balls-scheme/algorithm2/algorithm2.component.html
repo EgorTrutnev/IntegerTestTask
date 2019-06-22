@@ -1,0 +1,379 @@
+<div class="row">
+  <div class="col-lg-5 scheme-block">
+    <div class="scheme" style="height: 660px; width: 305px;">
+	  <div class="sbbscheme"></div>
+      <svg>
+        <polygon data-id="1" points="219.2 10 230.69 10 240 19.31 240 30.8 240 34.64 240 26.64 240 30.8 240 41.41 231.41 50 220.8 50 190.64 50 119.36 50 89.2 50 78.59 50 70 41.41 70 30.8 70 26.64 70 34.64 70 30.8 70 19.31 79.31 10 90.8 10 120.64 10 189.36 10 219.2 10"></polygon>
+        <polygon data-id="2" points="100 100 240 100 210 140 70 140 100 100"></polygon>
+        <polygon data-id="3" points="70.31 189.22 240.31 189.22 240.31 229.22 70.31 229.22 70.31 189.22"></polygon>
+        <polygon data-id="4" points="155 280 70 315.41 70 315.41 155 350 240 313.75 240 313.75 155 280"></polygon>
+        <polygon data-id="5" points="70.31 400.78 240.31 400.78 240.31 440.78 70.31 440.78 70.31 400.78"></polygon>
+        <polygon data-id="6" points="154.9 491.19 69.9 526.6 69.9 526.6 154.9 561.19 239.9 524.94 239.9 524.94 154.9 491.19"></polygon>
+        <polygon data-id="7" points="219.51 611.5 231 611.5 240.31 620.81 240.31 632.3 240.31 636.14 240.31 628.14 240.31 632.3 240.31 642.91 231.72 651.5 221.12 651.5 190.95 651.5 119.67 651.5 89.51 651.5 78.91 651.5 70.31 642.91 70.31 632.3 70.31 628.14 70.31 636.14 70.31 632.3 70.31 620.81 79.63 611.5 91.12 611.5 120.95 611.5 189.67 611.5 219.51 611.5"></polygon>
+      </svg>
+    </div>
+    <div class="scheme-item" data-id="1" style="top: 13px;">
+      <div class="scheme-name">Начало</div>
+      <div class="scheme-popup">
+		На данном этапе осуществляется вход в программу.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="2" style="top: 103px;">
+      <div class="scheme-name">Берём коробку с шарами</div>
+      <div class="scheme-popup">
+		Основная задача на этом этапе сформировать коробку с шарами. Сложность состоит в том, что общее количество шаров обоих цветов, шаров чёрного и белого цветов, а также расположение каждого из них нам неизвестно. Всё должно формироваться случайным образом. Для случайного определения количества чёрных шаров в коробке стоит ввсети понятие <span class="default">"концентрация"</span>.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="3" style="top: 192px;">
+      <div class="scheme-name">Достаём шар из коробки</div>
+      <div class="scheme-popup">
+		Для решения задачи по изъятию шарика из коробки необходимо воспользоваться циклом, в котором будут поочерёдно (начиная с первого) доставать шары друг за другом.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="4" style="top: 298px;">
+      <div class="scheme-name">Шар чёрный?</div>
+      <div class="scheme-popup">
+		Для решения этйо задачи необходимо использовать условный оператор сравнения. Здесь нужно проверить значение изъятого из коробки шара. Если оно равно <span class="default">"0"</span> - шар белый, <span class="default">"1"</span> - чёрный.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="5" style="top: 404px;">
+      <div class="scheme-name">Забираем шар</div>
+      <div class="scheme-popup">
+		Здесь можно выполнить любые задачи с полученным шаром. Но главное, нужно учесть есть, увеличив переменную, отвечающую за количество шаров на <span class="default">1</span>.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="6" style="top: 510px;">
+      <div class="scheme-name">В корзине есть ещё шары?</div>
+      <div class="scheme-popup">
+		На этом этапе необходимо вернуться к циклу из блока <span class="default">"Достаём шар из коробки"</span>, который, при наличии шаров, продолжит изъвлекать их из коробки, или остановится, при их отсутствии.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="7" style="top: 615px;">
+      <div class="scheme-name">Конец</div>
+      <div class="scheme-popup">
+		На данном этапе осуществляется выход в программу.
+      </div>
+    </div>
+    <div class="scheme-item" data-id="8" style="top: 355px; left: 180px">
+      <div class="scheme-name scheme-answer">да</div>
+    </div>
+    <div class="scheme-item" data-id="9" style="top: 295px; left: 60px">
+      <div class="scheme-name scheme-answer">нет</div>
+    </div>
+    <div class="scheme-item" data-id="10" style="top: 505px; left: 265px">
+      <div class="scheme-name scheme-answer">да</div>
+    </div>
+    <div class="scheme-item" data-id="11" style="top: 565px; left: 180px">
+      <div class="scheme-name scheme-answer">нет</div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="code-head">Реализация алгоритма на языке C#</div>
+    <div class="code-body" style="max-height: 650px;">
+      <table class="table code-table">
+        <tbody>
+          <tr>
+            <th class="line-number" scope="row">1</th>
+            <td data-id="2"><span class="green">//Создаём объект для генерации случайного числа</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">2</th>
+            <td data-id="2"><span class="default"><span class="deepskyblue">Random</span> <span class="steelblue">rnd</span> = <span class="blue">new</span> <span class="deepskyblue">Random</span>();</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">3</th>
+            <td data-id="2"></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">4</th>
+            <td data-id="2"><span class="green">//Создаём случайное количество шаров в коробке в диапазоне от 1 до 50</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">5</th>
+            <td data-id="2"><span class="green">//Начальное количество шаров (1) обусловлено тем, что в коробке должен быть хотя бы один шар любого цвета</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">6</th>
+            <td data-id="2"><span class="default"><span class="blue">int</span> <span class="steelblue">ballsCount</span> = <span class="steelblue">rnd</span>.<span class="brown">Next</span>(1, 50);</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">7</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">8</th>
+            <td data-id="2"><span class="green">//Создаём случайное процентное соотношение количества чёрных шаров к белым (концентрацию)</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">9</th>
+            <td data-id="2"><span class="default"><span class="blue">int</span> <span class="steelblue">concentration</span> = <span class="steelblue">rnd</span>.<span class="brown">Next</span>(100);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">10</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">11</th>
+            <td data-id="2"><span class="green">//Задаём количество чёрных шаров в корзине исходя из концентрации чёрных и общего количества шаров в коробке округляя значение до ближайшего целого</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">12</th>
+            <td data-id="2"><span class="default"><span class="blue">double</span> <span class="steelblue">blackBallNumber</span> = <span class="deepskyblue">Math</span>.<span class="brown">Round</span>((<span class="blue">double</span>)<span class="steelblue">ballsCount</span> / 100 * <span class="steelblue">concentration</span>);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">13</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">14</th>
+            <td data-id="2"><span class="green">//Создаём и заполняем массив общим количеством шаров обоих цветов</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">15</th>
+            <td data-id="2"><span class="default"><span class="blue">int</span>[] <span class="steelblue">ballsArray</span> = <span class="deepskyblue">Enumerable</span>.<span class="brown">Range</span>(1, <span class="steelblue">ballsCount</span>).<span class="brown">ToArray</span>();</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">16</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">17</th>
+            <td data-id="2"><span class="green">//Используя цикл по количеству всех шаров, начинаем идти с первого в коробке</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">18</th>
+            <td data-id="2"><span class="default"><span class="purple">for</span> (<span class="blue">int</span> <span class="steelblue">i</span> = 0; <span class="steelblue">i</span> < <span class="steelblue">blackBallNumber</span>; <span class="steelblue">i</span>++)</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">19</th>
+            <td data-id="2"><span class="default">{{'{'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">20</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Случайным образом выбираем номер шара из коробки</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">21</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="blue">int</span> <span class="steelblue">number</span> = <span class="steelblue">rnd</span>.<span class="brown">Next</span>(<span class="steelblue">ballsCount</span>-1);</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">22</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">23</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Достаём шар с выбранным выше номером</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">24</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="blue">int</span> <span class="steelblue">temp</span> = <span class="steelblue">ballsArray</span>[<span class="steelblue">number</span>];</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">25</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">26</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Вместо вынутого шара кладём тот, что занимает позицию i в коробке</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">27</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="steelblue">ballsArray</span>[<span class="steelblue">number</span>] = <span class="steelblue">ballsArray</span>[<span class="steelblue">i</span>];</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">28</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">29</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Вместо поседнего шара кладём то, что вынули случайно, т.е. меняем оба шара местами</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">30</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="steelblue">ballsArray</span>[<span class="steelblue">i</span>] = <span class="steelblue">temp</span>;</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">31</th>
+            <td data-id="2"><span class="default">{{'}'}}</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">32</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">33</th>
+            <td data-id="2"><span class="green">//Создаём коробку со всеми шарами и по-умолчанию делаем их белыми (значение '0')</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">34</th>
+            <td data-id="2"><span class="default"><span class="blue">int</span>[] <span class="steelblue">ballsBox</span> = <span class="blue">new int</span> [<span class="steelblue">ballsCount</span>];</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">35</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">36</th>
+            <td data-id="2"><span class="green">//Создаём цикл размерность которого равна количетву чёрных шаров в коробке</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">37</th>
+            <td data-id="2"><span class="default"><span class="purple">for</span> (<span class="blue">int</span> <span class="steelblue">i</span> = 0; <span class="steelblue">i</span> < <span class="steelblue">blackBallNumber</span>; <span class="steelblue">i</span>++)</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">38</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Получая значение i-го элемента из массива ballsArray, меняем у элемента массива ballsBox, соответствующего полученному значению, цвет на чёрный (значение '1')</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">39</th>
+            <td data-id="2">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="steelblue">ballsBox</span>[<span class="steelblue">ballsArray</span>[<span class="steelblue">i</span>]-1] = 1;</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">40</th>
+            <td data-id="2"></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">41</th>
+            <td data-id="2"><span class="green">//На этом этапе у нас получилась полностью сформированная случайным образом коробка с шарами. Теперь с ней можно работать</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">42</th>
+            <td></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">43</th>
+            <td><span class="green">//Задаём переменную для подсчёта чёрных шаров</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">44</th>
+            <td><span class="default"><span class="blue">int</span> <span class="steelblue">getBlackballsCount</span> = 0;</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">45</th>
+            <td></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">46</th>
+            <td data-id="3"><span class="green">//С помощью цикла начинаем перебирать по порядку все шары в коробке</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">47</th>
+            <td data-id="3"><span class="default"><span class="purple">for</span> (<span class="blue">int</span> <span class="steelblue">i</span> = 0; <span class="steelblue">i</span> < <span class="steelblue"><span class="steelblue">ballsBox</span>.Length</span>; <span class="steelblue">i</span>++)</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">48</th>
+            <td data-id="3"><span class="default">{{'{'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">49</th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Если достаём шар чёрного цвета</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">50</th>
+            <td data-id="4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="purple">if</span>(<span class="steelblue">ballsBox</span>[<span class="steelblue">i</span>] == 1)</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">51</th>
+            <td data-id="4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default">{{'{'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">52</th>
+            <td data-id="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Выполняем необходимые работы с шаром</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">53</th>
+            <td data-id="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//К примеру, в консольном приложении можно вывести позицию чёрного шара следующим образом</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">54</th>
+            <td data-id="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="deepskyblue">Console</span>.<span class="brown">WriteLine</span>(<span class="red">$"Извлечён чёрный шар № <span class="default">{{'{'}}<span class="steelblue">i</span> + 1{{'}'}}</span>"</span>);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">55</th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">56</th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Увеличиваем количество найденных чёрных шаров на 1</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">57</th>
+            <td data-id="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="steelblue">getBlackballsCount</span>++;</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">58</th>
+            <td data-id="4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default">{{'}'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">59</th>
+            <td data-id="4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Иначе цвет шара - белый</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">60</th>
+            <td data-id="4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="purple">else</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">61</th>
+            <td data-id="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="deepskyblue">Console</span>.<span class="brown">WriteLine</span>(<span class="red">$"Извлечён белый шар № <span class="default">{{'{'}}<span class="steelblue">i</span> + 1{{'}'}}</span>"</span>);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">62</th>
+            <td data-id="3"><span class="default">{{'}'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">63</th>
+            <td></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">64</th>
+            <td data-id="11"><span class="green">//Если общее количество шаров в коробке совпало с количеством вынутых чёрных</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">65</th>
+            <td data-id="11"><span class="default"><span class="purple">if</span>(<span class="steelblue">getBlackballsCount</span> == <span class="steelblue">ballsCount</span>)</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">66</th>
+            <td data-id="11"><span class="default">{{'{'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">67</th>
+            <td data-id="11">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Делаем вывод, что все шары в коробке были чёрными</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">68</th>
+            <td data-id="11">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="deepskyblue">Console</span>.<span class="brown">WriteLine</span>(<span class="red">"Все шары в коробке - чёрные"</span>);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">69</th>
+            <td data-id="11"><span class="default">{{'}'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">70</th>
+            <td data-id="11"><span class="green">//Если же после перебора всех шаров в коробке не было извлечено ни одного чёрного шара</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">71</th>
+            <td data-id="11"><span class="default"><span class="purple">else if</span>(<span class="steelblue">getBlackballsCount</span> == 0)</span></td>
+          </tr>
+          <tr>
+            <th class="line-number" scope="row">72</th>
+            <td data-id="11"><span class="default">{{'{'}}</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">73</th>
+            <td data-id="11">&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">//Делаем вывод, что все шары в коробке были белыми</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">74</th>
+            <td data-id="11">&nbsp;&nbsp;&nbsp;&nbsp;<span class="default"><span class="deepskyblue">Console</span>.<span class="brown">WriteLine</span>(<span class="red">"Все шары в коробке - белые"</span>);</span></td>
+          </tr>
+		  <tr>
+            <th class="line-number" scope="row">75</th>
+            <td data-id="11"><span class="default">{{'}'}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,268 @@
+<h1>Пример работы</h1>
+<p>На данной странице реализована задача поиска чёрных шаров в коробке с белыми.</p>
+<div *ngIf="serversettings != null && !globerrorload">
+  <div *ngIf="serversettings != null" class="alert alert-arrow alert-arrow-warning d-flex rounded p-0" role="alert">
+    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+      <i class="material-icons md-24">
+        warning
+      </i>
+    </div>
+    <div class="alert-message align-items-center py-2 pl-4 pr-3">
+      На сервере установлено ограничение  на количество всех шаров в коробке. Оно не должно превышать значение <b>{{serversettings.maxBallsCount}}</b>.
+    </div>
+    <a href="#" class="close d-flex ml-auto justify-content-center align-items-center px-3" data-dismiss="alert">
+      <i class="material-icons">
+        clear
+      </i>
+    </a>
+  </div>
+  <div class="alert alert-arrow alert-arrow-primary-bs3 d-flex rounded p-0" role="alert">
+    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+      <i class="material-icons md-24">
+        info
+      </i>
+    </div>
+    <div class="alert-message align-items-center py-2 pl-4 pr-3">
+      Для формирования коробки с шарами используются <b>Web API</b>.
+    </div>
+    <a href="#" class="close d-flex ml-auto justify-content-center align-items-center px-3" data-dismiss="alert">
+      <i class="material-icons">
+        clear
+      </i>
+    </a>
+  </div>
+  <div class="alert alert-arrow alert-arrow-primary-bs3 d-flex rounded p-0" role="alert">
+    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+      <i class="material-icons md-24">
+        info
+      </i>
+    </div>
+    <div class="alert-message align-items-center py-2 pl-4 pr-3">
+      Под <b>концентрацией</b> понимается соотношение чёрных шаров к белым. Если концентрация равна <b>100%</b> - все шары <b>чёрные</b>, <b>0%</b> - все шары <b>белые</b>.
+    </div>
+    <a href="#" class="close d-flex ml-auto justify-content-center align-items-center px-3" data-dismiss="alert">
+      <i class="material-icons">
+        clear
+      </i>
+    </a>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="my-3 p-3 bg-white rounded shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">1. Общее количество шаров в коробке</h6>
+        <br>
+        <div class="form-group">
+          <input type="text" class="form-control" id="BallsCountInput" name="{{serversettings?.maxBallsCount}}" aria-describedby="ballsCountHelp" placeholder="Укажите количество или оставьте поле пустым">
+          <small *ngIf="serversettings != null" id="ballsCountHelp" class="form-text text-muted">Указанное значение должно быть в границах от 1 до {{serversettings.maxBallsCount}} или оставьте поле пустым для случайного результата.</small>
+        </div>
+      </div>
+      <div class="my-3 p-3 bg-white rounded shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">2. Процентное сотношение чёрных шаров к белым</h6>
+        <br>
+        <div class="form-group">
+          <input type="text" class="form-control" id="ConcentrationInput" aria-describedby="concentrationHelp" placeholder="Укажите процент или оставьте поле пустым">
+          <small id="concentrationHelp" class="form-text text-muted">Указанное значение должно быть в границах от 0 до 100 или оставьте поле пустым для случайного результата.</small>
+        </div>
+      </div>
+      <div class="my-3 p-3 bg-white rounded shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">3. Количество чёрных шаров</h6>
+        <br>
+        <div class="form-group">
+          <input type="text" class="form-control" id="BlackBallsInput" name="{{serversettings?.maxBallsCount}}" aria-describedby="blackBallsHelp" placeholder="Укажите количество или оставьте поле пустым">
+          <small *ngIf="serversettings != null" id="concentrationHelp" class="form-text text-muted">Указанное значение должно быть в границах от 0 до {{serversettings.maxBallsCount}} или оставьте поле пустым для случайного результата.</small>
+        </div>
+      </div>
+      <div class="my-3 p-3 bg-white rounded shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">4. Количество белых шаров</h6>
+        <br>
+        <div class="form-group">
+          <input type="text" class="form-control" id="WhiteBallsInput" name="{{serversettings?.maxBallsCount}}" aria-describedby="whiteBallsHelp" placeholder="Укажите количество или оставьте поле пустым">
+          <small *ngIf="serversettings != null" id="concentrationHelp" class="form-text text-muted">Указанное значение должно быть в границах от 0 до {{serversettings.maxBallsCount}} или оставьте поле пустым для случайного результата.</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="my-3 p-3 bg-white rounded shadow result-menu">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Входные параметры</h6>
+        <br>
+        <div class="form-group">
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div class="figure-margin">
+                <figure class="circle black-and-white"></figure>
+              </div>
+              <div class="central-block">
+                <h6 class="my-0">Всего шаров</h6>
+                <small class="text-muted">Общее количество шаров в коробке</small>
+              </div>
+              <div class="text-right">
+                <h6 id="BallsCountText" class="my-0">Случайно</h6>
+                <small class="text-muted">шт.</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div class="figure-margin">
+                <figure class="circle concentration"></figure>
+              </div>
+              <div class="central-block">
+                <h6 class="my-0">Концентрация</h6>
+                <small class="text-muted">Соотношение чёрных шаров к белым в %</small>
+              </div>
+              <div class="text-right">
+                <h6 id="ConcentrationText" class="my-0">Случайно</h6>
+                <small class="text-muted">%</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div class="figure-margin">
+                <figure class="circle black"></figure>
+              </div>
+              <div class="central-block">
+                <h6 class="my-0">Чёрных шаров</h6>
+                <small class="text-muted">Количество чёрных шаров в коробке</small>
+              </div>
+              <div class="text-right">
+                <h6 id="BlackBallsText" class="my-0">Случайно</h6>
+                <small class="text-muted">шт.</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div class="figure-margin">
+                <figure class="circle white"></figure>
+              </div>
+              <div class="central-block">
+                <h6 class="my-0">Белых шаров</h6>
+                <small class="text-muted">Количество белых шаров в коробке</small>
+              </div>
+              <div class="text-right">
+                <h6 id="WhiteBallsText" class="my-0">Случайно</h6>
+                <small class="text-muted">шт.</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <button class="btn btn-primary-bs3 btn-block" (click)="CreateBoxBalls()">Сформировать коробку</button>
+      </div>
+      <div *ngIf="boxballs != null">
+        <div *ngIf="boxballs.errorCode" class="alert alert-danger" role="alert">
+          <h4 class="alert-heading">Ошибка № {{boxballs.errorCode}}</h4>
+          <p>{{boxballs.value}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="statusload && !boxballs" class="text-center">
+    <hr>
+    <div class="spinner-border text-primary-bs3" role="status">
+      <span class="sr-only">Загрузка...</span>
+    </div>
+  </div>
+  <div *ngIf="errorload != null">
+    <hr>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Ошибка ответа от сервера</h4>
+      <p>Не удалось выполнить исходящий запрос. Ответ сервера: "<b>{{errorload}}</b>".</p>
+    </div>
+  </div>
+  <div *ngIf="boxballs != null">
+    <div *ngIf="boxballs.ballsCount && !statusload">
+      <hr>
+      <div class="text-center">
+        <h2>Результат</h2>
+      </div>
+      <div class="result-head"></div>
+      <div class="p-3 shadow result-block">
+        <div class="bg-white rounded result-content">
+          <div class="p-3 rounded shadow">
+            <div class="row">
+              <div class="col-lg-3 col-sm-6 flex-block">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Всего шаров</h6>
+                  <br>
+                  <figure class="circle black-and-white figure-center"></figure>
+                  <h2 class="my-0">{{boxballs?.ballsCount}}</h2>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 flex-block">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Концентрация</h6>
+                  <br>
+                  <figure class="circle concentration" figure-center></figure>
+                  <h2 class="my-0">{{boxballs?.concentration}}</h2>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 flex-block">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Чёрных шаров</h6>
+                  <br>
+                  <figure class="circle black" figure-center></figure>
+                  <h2 class="my-0">{{boxballs?.blackBalls}}</h2>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 flex-block">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Белых шаров</h6>
+                  <br>
+                  <figure class="circle white" figure-center></figure>
+                  <h2 class="my-0">{{boxballs?.whiteBalls}}</h2>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="boxballs.blackBallsNumbers.length > 0 && boxballs.whiteBallsNumbers.length > 0" class="row">
+              <div *ngIf="boxballs.blackBallsNumbers.length > 0" class="col-12">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
+                  <h6 class="border-bottom border-gray pb-2 mb-0">Чёрные шары с номерами</h6>
+                  <br>
+                  <div class="form-group">
+                    <figure class="circle black" *ngFor="let blackBallsNumber of boxballs.blackBallsNumbers">
+                      <div class="text-center figure-number">{{blackBallsNumber}}</div>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="boxballs.whiteBallsNumbers.length > 0" class="col-12">
+                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
+                  <h6 class="border-bottom border-gray pb-2 mb-0">Белые шары с номерами</h6>
+                  <br>
+                  <div class="form-group">
+                    <figure class="circle white" *ngFor="let whiteBallsNumbers of boxballs.whiteBallsNumbers">
+                      <div class="text-center figure-number">{{whiteBallsNumbers}}</div>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="coll-12">
+                <div class="p-3">
+                  <div class="alert alert-arrow alert-arrow-primary-bs3 div-shadow d-flex rounded p-0" role="alert">
+                    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+                      <i class="material-icons md-24">
+                        info
+                      </i>
+                    </div>
+                    <div class="alert-message align-items-center py-2 pl-4 pr-3">
+                      Данные сформированы с использованием <b>Web API</b> на основании запроса "<b>https://localhost:5001/{{url}}</b>".
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="serversettings == null && globerrorload" class="alert alert-arrow alert-arrow-danger d-flex rounded p-0" role="alert">
+  <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+    <i class="material-icons md-24">
+      cancel
+    </i>
+  </div>
+  <div class="alert-message align-items-center py-2 pl-4 pr-3">
+    Во время получения данных произошла ошибка загрузки глобальных серверных параметров. Использование страницы <b>невозможно!</b>
+  </div>
+</div>

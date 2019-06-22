@@ -1,0 +1,103 @@
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" [routerLink]='["/"]'>
+      <div class ="navbar-brand-shadow">
+        <div class="navbar-brand-svg logo"></div>
+      </div>
+    </a>
+    <a href="https://github.com/EgorTrutnev" target="_blank" class="d-md-none link">
+      <div class="navbar-brand-shadow">
+        <div class="navbar-brand-svg gitlogo"></div>
+      </div>
+    </a>
+    <div class="collapse navbar-collapse" id="sidebarCollapse">
+      <ul class="navbar-nav">
+        <li class="nav-item"  [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a class="nav-link" [routerLink]='["/"]' (click)='collapse()'>
+            <i class="material-icons">
+              home
+            </i>
+            Домашняя
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#boxBalls" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarComponents">
+            <i class="material-icons">
+              unarchive
+            </i>
+            Коробка с шарами
+            <i class="material-icons keyboard-arrow">
+              keyboard_arrow_down
+            </i>
+          </a>
+          <div class="collapse show" id="boxBalls">
+            <ul class="nav nav-sm flex-column">
+              <li class="nav-item" [routerLinkActive]='["link-active"]'>
+                <a class="nav-link" [routerLink]='["box-balls-scheme"]' (click)='collapse()'>
+                  Блок-схемы
+                </a>
+              </li>
+              <li class="nav-item" [routerLinkActive]='["link-active"]'>
+                <a class="nav-link" [routerLink]='["box-balls-data"]' (click)='collapse()'>
+                  Пример работы
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+		<li class="nav-item"  [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a class="nav-link" [routerLink]='["/abstract-class"]' (click)='collapse()'>
+            <i class="material-icons">
+              view_quilt
+            </i>
+            Абстрактные классы
+          </a>
+        </li>
+		<li class="nav-item"  [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a class="nav-link" [routerLink]='["/crud-table"]' (click)='collapse()'>
+            <i class="material-icons">
+              web
+            </i>
+            Работа с таблицами
+          </a>
+        </li>
+      </ul>
+      <hr class="navbar-divider my-3">
+      <h6 class="navbar-heading">
+        Документация
+      </h6>
+
+      <ul class="navbar-nav mb-md-4">
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a class="nav-link " [routerLink]='["/task"]'>
+            <i class="material-icons">
+              description
+            </i>
+            Тех. задание
+          </a>
+        </li>
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a class="nav-link " [routerLink]='["/github-log"]'>
+            <i class="material-icons">
+              merge_type
+            </i>
+            GitHub
+            <span class="badge badge-primary-bs3 ml-auto">
+              v0.8
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="navbar-footer">
+        <a href="https://github.com/EgorTrutnev" target="_blank" class="link">
+          <div class="navbar-brand-shadow">
+            <div class="navbar-brand-svg gitlogo"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
