@@ -1,5 +1,12 @@
 <h1>Пример работы</h1>
 <p>На данной странице реализована задача поиска чёрных шаров в коробке с белыми.</p>
+
+<div *ngIf="serversettings == null && !globerrorload" class="text-center">
+  <div class="spinner-border text-primary-bs3 " role="status">
+    <span class="sr-only">Загрузка...</span>
+  </div>
+</div>
+
 <div *ngIf="serversettings != null && !globerrorload">
   <div *ngIf="serversettings != null" class="alert alert-arrow alert-arrow-warning d-flex rounded p-0" role="alert">
     <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
@@ -38,7 +45,7 @@
       </i>
     </div>
     <div class="alert-message align-items-center py-2 pl-4 pr-3">
-      Под <b>концентрацией</b> понимается соотношение чёрных шаров к белым. Если концентрация равна <b>100%</b> - все шары <b>чёрные</b>, <b>0%</b> - все шары <b>белые</b>.
+      Под <b>концентрацией</b> понимается соотношение чёрных шаров к белым. Если концентрация равна <b>100%</b> - все шары <b>чёрные</b>, <b>0%</b> - все шары <b>белые</b>. Значение <b>концентрации</b> при выводе округляется до ближайшего <b>целого</b> числа.
     </div>
     <a href="#" class="close d-flex ml-auto justify-content-center align-items-center px-3" data-dismiss="alert">
       <i class="material-icons">
@@ -174,7 +181,7 @@
       </div>
       <div class="result-head"></div>
       <div class="p-3 shadow result-block">
-        <div class="bg-white rounded result-content">
+        <div class="rounded result-content">
           <div class="p-3 rounded shadow">
             <div class="row">
               <div class="col-lg-3 col-sm-6 flex-block">

@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
+import { AngularPaginatorModule } from 'angular-paginator';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -11,18 +13,20 @@ import { BoxBallsSchemeComponent } from './box-balls-scheme/box-balls-scheme.com
 import { BoxBallsSchemeAlg1Component } from './box-balls-scheme/algorithm1/algorithm1.component';
 import { BoxBallsSchemeAlg2Component } from './box-balls-scheme/algorithm2/algorithm2.component';
 import { BoxBallsDataComponent } from './box-balls-data/box-balls-data.component';
+import { SampleTableComponent } from './sample-table/sample-table.component';
 import { NotFoundComponent } from './not-found/not-found.component';
  
-const algorithmRoutes: Routes = [
+const BoxBallsAlgorithmRoutes: Routes = [
   { path: '', component: BoxBallsSchemeAlg1Component },
   { path: 'alg2', component: BoxBallsSchemeAlg2Component },
 ];
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'box-balls-scheme', component: BoxBallsSchemeComponent, children: algorithmRoutes },
+  { path: 'box-balls-scheme', component: BoxBallsSchemeComponent, children: BoxBallsAlgorithmRoutes },
   { path: 'box-balls-data', component: BoxBallsDataComponent },
-  { path: '**', component: NotFoundComponent },
+  { path: 'sample-table', component: SampleTableComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -34,12 +38,15 @@ const appRoutes: Routes = [
     BoxBallsSchemeAlg1Component,
     BoxBallsSchemeAlg2Component,
     BoxBallsDataComponent,
+    SampleTableComponent,
     NotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    NgSelectModule,
     FormsModule,
+    AngularPaginatorModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
@@ -48,5 +55,6 @@ const appRoutes: Routes = [
 export class AppModule { }
 
 export interface ServerSettings {
-  maxballscount: number;
+  maxBallsCount: number;
+  versionProduct: string;
 }

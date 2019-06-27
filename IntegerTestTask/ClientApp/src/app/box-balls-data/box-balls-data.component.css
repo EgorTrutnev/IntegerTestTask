@@ -25,7 +25,7 @@
 }
 
 .circle-box .form-group {
-  max-height: 210px;
+  max-height: 213px;
   overflow-y: auto;
 }
 
@@ -57,11 +57,12 @@
   background: linear-gradient(315deg, #bf986a, #e6c9a5);
 }
 
-.result-block .result-content {
-  margin-block: 2.5rem;
-  margin-inline: 1.5rem;
-  box-shadow: inset 7px 5px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgb(255, 255, 255);
-}
+  .result-block .result-content {
+    margin-block: 2.5rem;
+    margin-inline: 1.5rem;
+    background-color: #fff5ec;
+    box-shadow: inset 7px 5px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgb(255, 255, 255);
+  }
 
 .result-block .div-shadow {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;

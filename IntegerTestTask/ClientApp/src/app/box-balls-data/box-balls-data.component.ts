@@ -1,7 +1,6 @@
 import { Component, Injectable, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServerSettings } from '../app.module';
-import { isObject } from 'util';
 
 @Component({
   selector: 'app-box-balls-data',
@@ -76,6 +75,7 @@ export class BoxBallsDataComponent {
 
   private CreateBoxBalls(): void {
     this.statusload = true;
+    this.errorload = null;
     this.boxballs = null;
 
     var ballscount: string = (<HTMLInputElement>document.getElementById("BallsCountInput")).value;

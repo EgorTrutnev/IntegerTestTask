@@ -5,7 +5,7 @@ import * as $ from 'jquery';
   selector: 'app-box-balls-scheme',
   templateUrl: './box-balls-scheme.component.html',
   styleUrls: ['./box-balls-scheme.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 
 export class BoxBallsSchemeComponent {

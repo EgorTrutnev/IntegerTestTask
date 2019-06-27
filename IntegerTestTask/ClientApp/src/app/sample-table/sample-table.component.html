@@ -1,0 +1,448 @@
+<h1>Выборка из базы данных</h1>
+
+<p>
+  На данной странице реализована выборка из базы данных по одному или нескольким критериям.
+</p>
+
+<p>
+  Для создания таблиц в бд <b>MSSQL Server</b> в <b>C#</b> используется подход <b>CodeFirst</b>.
+  Если на серере ещё нет таблиц, они создаются и заполняются автоматически на основании <b>DataBase Context</b>'а и <b>DataBase Seed Context</b>'а.
+</p>
+
+<p>Всего в базе формируется 3 таблицы:</p>
+
+<ul>
+  <li><b>Таблица №1 (Студенты)</b> - содаржит в себе студентов и их персональную информацию (ФИО, дата рождения и год обучения(курс)).</li>
+  <li><b>Таблица №2 (Предметы)</b> - содержит предметы, по которым студенты сдают экзамены.</li>
+  <li><b>Таблица №3 (Результаты обучения)</b> - объединяет 1 и 2 таблицы, используя модель <b>one-to-many</b> (один-ко-многим), и добавляет к ним оценку за сдачу предмета.</li>
+</ul>
+
+<br>
+
+<div *ngIf="loadtablesstatus" class="alert alert-arrow alert-arrow-danger d-flex rounded p-0" role="alert">
+  <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+    <i class="material-icons md-24">
+      cancel
+    </i>
+  </div>
+  <div class="alert-message align-items-center py-2 pl-4 pr-3">
+    Во время загрузки одной или нескольких таблиц произошла ошибка получения данных. Дальнейшее использование страницы <b>невозможно</b>!
+  </div>
+</div>
+
+<div *ngIf="!loadtablesstatus" class="normal-span">
+  <div id="st-tables" class="block-collapse">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#learningOutcome" role="button" aria-expanded="false" aria-controls="learningOutcome">
+          Результаты обучения
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-toggle="collapse" href="#students" role="button" aria-expanded="false" aria-controls="students">
+          Студенты
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-toggle="collapse" href="#subjectsOfStudy" role="button" aria-expanded="false" aria-controls="subjectsOfStudy">
+          Предметы
+        </a>
+      </li>
+    </ul>
+    <div id="learningOutcome" class="collapse show" aria-labelledby="headingOne" data-parent="#st-tables">
+      <div class="p-3 bg-white rounded shadow">
+        <div *ngIf="!students && !subjectsOfStudy && !learningOutcome && !loadstudentsstatus && !loadsubjectsstatus && !loadlearnsstatus" class="text-center">
+          <div class="spinner-border text-primary-bs3 " role="status">
+            <span class="sr-only">Загрузка...</span>
+          </div>
+        </div>
+        <div *ngIf="students && subjectsOfStudy && !loadtablesstatus">
+          <div class="overflow-auto">
+            <table class="table table-striped table-bordered bg-white h6">
+              <thead class="thead-primary-bs3 font-weight-bold">
+                <tr>
+                  <td>№</td>
+                  <td>ФИО студента</td>
+                  <td>Дата рождения</td>
+                  <td>Курс</td>
+                  <td>Предмет</td>
+                  <td>Балл</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let learningOutcome of learningOutcomes | angularPaginator: { id:'tableLearningOutcomes', itemsPerPage: tableItemsPerPage, currentPage: currentLearningPage }; let i = index">
+                  <td>{{(currentLearningPage - 1) * tableItemsPerPage + i + 1}}</td>
+                  <td>{{students[learningOutcome.studentId-1].name}}</td>
+                  <td>{{students[learningOutcome.studentId-1].dateOfBirthday}}</td>
+                  <td>{{students[learningOutcome.studentId-1].studentYear}}</td>
+                  <td>{{subjectsOfStudy[learningOutcome.subjectId-1].title}}</td>
+                  <td>{{learningOutcome.score}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col">
+              <app-angular-paginator id="tableLearningOutcomes" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentLearningPage = $event"></app-angular-paginator>
+            </div>
+            <div class="col-auto">
+              <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="tableItemsPerPage">
+                <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+              </ng-select>
+              <h6><small>записей на странице</small></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="students" class="collapse" aria-labelledby="headingTwo" data-parent="#st-tables">
+      <div class="p-3 bg-white rounded shadow">
+        <div *ngIf="!students && !loadstudentsstatus" class="text-center">
+          <div class="spinner-border text-primary-bs3 " role="status">
+            <span class="sr-only">Загрузка...</span>
+          </div>
+        </div>
+        <div *ngIf="students && !loadtablesstatus">
+          <div class="overflow-auto">
+            <table class="table table-striped table-bordered bg-white h6">
+              <thead class="thead-primary-bs3 font-weight-bold">
+                <tr>
+                  <td>№</td>
+                  <td>ФИО</td>
+                  <td>Дата рождения</td>
+                  <td>Курс</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let student of students | angularPaginator: { id: 'tableStudents', itemsPerPage: tableItemsPerPage, currentPage: currentStudentPage }; let i = index">
+                  <td>{{(currentStudentPage - 1) * tableItemsPerPage + i + 1}}</td>
+                  <td>{{student.name}}</td>
+                  <td>{{student.dateOfBirthday}}</td>
+                  <td>{{student.studentYear}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col">
+              <app-angular-paginator id="tableStudents" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentStudentPage = $event"></app-angular-paginator>
+            </div>
+            <div class="col-auto">
+              <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="tableItemsPerPage">
+                <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+              </ng-select>
+              <h6><small>записей на странице</small></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="subjectsOfStudy" class="collapse" aria-labelledby="headingThree" data-parent="#st-tables">
+      <div class="p-3 bg-white rounded shadow">
+        <div *ngIf="!subjectsOfStudy && !loadsubjectsstatus" class="text-center">
+          <div class="spinner-border text-primary-bs3 " role="status">
+            <span class="sr-only">Загрузка...</span>
+          </div>
+        </div>
+        <div *ngIf="subjectsOfStudy && !loadtablesstatus">
+          <div class="overflow-auto">
+            <table class="table table-striped table-bordered bg-white h6">
+              <thead class="thead-primary-bs3 font-weight-bold">
+                <tr>
+                  <td>№</td>
+                  <td>Наименование</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let subjectOfStudy of subjectsOfStudy | angularPaginator: { id: 'tableSubjects', itemsPerPage: tableItemsPerPage, currentPage: currentSubjectPage }; let i = index">
+                  <td>{{(currentSubjectPage - 1) * tableItemsPerPage + i + 1}}</td>
+                  <td>{{subjectOfStudy.title}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col">
+              <app-angular-paginator id="tableSubjects" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentSubjectPage = $event"></app-angular-paginator>
+            </div>
+            <div class="col-auto">
+              <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="tableItemsPerPage">
+                <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+              </ng-select>
+              <h6><small>записей на странице</small></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="my-3 p-3 bg-white rounded shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Выборка данных</h6>
+    <br>
+    <div class="row">
+      <div class="col-md-12 col-lg">
+        <ng-select [(ngModel)]="selectedSampleItem"
+                   placeholder="Выберите условие...">
+          <ng-option *ngFor="let sample of samples" [value]="sample.id">{{sample.name}}</ng-option>
+          <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+            <div class="ng-option disabled">
+              Нет совпадений по "{{searchTerm}}"
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-12 col-lg-auto my-4 my-lg-0">
+        <button class="btn btn-primary-bs3 btn-block" (click)="GetSampleDatas()">Получить результат</button>
+      </div>
+      <div *ngIf="selectedSampleItem > 0" class="col-md-12 col-lg-9 my-0 my-lg-3">
+        <p><b>Описание</b>: "{{samples[selectedSampleItem-1].description}}".</p>
+      </div>
+      <div *ngIf="noselected" class="col-12">
+        <p class="text-danger">Для формирования запроса необходимо выбрать один из пунктов!</p>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div *ngIf="statusload" class="text-center">
+    <hr>
+    <div class="spinner-border text-primary-bs3 " role="status">
+      <span class="sr-only">Загрузка...</span>
+    </div>
+  </div>
+
+  <div *ngIf="errorload != null">
+    <hr>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Ошибка ответа от сервера</h4>
+      <p>Не удалось выполнить исходящий запрос. Ответ сервера: "<b>{{errorload}}</b>".</p>
+    </div>
+  </div>
+
+  <div *ngIf="!statusload && successloadresult">
+    <hr>
+    <div class="my-3 p-3 bg-white rounded shadow">
+      <h3 class="border-bottom border-gray pb-2 mb-0 text-center result-head">Результат</h3>
+      <br>
+
+      <div *ngIf="tableParams.length == 0" class="alert alert-arrow alert-arrow-warning d-flex rounded p-0" role="alert">
+        <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+          <i class="material-icons md-24">
+            warning
+          </i>
+        </div>
+        <div class="alert-message align-items-center py-2 pl-4 pr-3">
+          Данных по запросу "<b>{{nofound}}</b>" не найдено.
+        </div>
+      </div>
+
+      <div *ngIf="loadingparam == 1 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>ФИО студента</td>
+                <td>Предмет</td>
+                <td>Балл</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams1', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam1Page }; let i = index">
+                <td>{{(currentParam1Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{students[tableParam.studentId - 1].name}}</td>
+                <td>{{subjectsOfStudy[tableParam.subject - 1].title}}</td>
+                <td>{{tableParam.score}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams1" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam1Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingparam == 2 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>ФИО студента</td>
+                <td>Средний балл</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams2', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam2Page }; let i = index">
+                <td>{{(currentParam2Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{students[tableParam.studentId - 1].name}}</td>
+                <td>{{tableParam.averageScore}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams2" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam2Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingparam == 3 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>ФИО студента</td>
+                <td>Суммарный балл</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams3', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam3Page }; let i = index">
+                <td>{{(currentParam3Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{students[tableParam.studentId - 1].name}}</td>
+                <td>{{tableParam.sumScore}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams3" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam3Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingparam == 4 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>Курс</td>
+                <td>Количество студентов</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams4', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam4Page }; let i = index">
+                <td>{{(currentParam4Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{tableParam.studentYear}}</td>
+                <td>{{tableParam.studentsCount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams4" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam4Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingparam == 5 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>ФИО студента</td>
+                <td>Дата рождения</td>
+                <td>Сумма цифр в дате рождения</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams5', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam5Page }; let i = index">
+                <td>{{(currentParam5Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{students[tableParam.studentId - 1].name}}</td>
+                <td>{{students[tableParam.studentId - 1].dateOfBirthday}}</td>
+                <td>{{tableParam.sumBirth}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams5" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam5Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingparam == 6 && tableParams.length > 0">
+        <div class="overflow-auto">
+          <table class="table table-striped table-bordered bg-white h6">
+            <thead class="thead-primary-bs3 font-weight-bold">
+              <tr>
+                <td>№</td>
+                <td>ФИО студента</td>
+                <td>Дата рождения</td>
+                <td>Курс</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams6', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam6Page }; let i = index">
+                <td>{{(currentParam6Page - 1) * resultTableItemsPerPage + i + 1}}</td>
+                <td>{{students[tableParam.studentId - 1].name}}</td>
+                <td>{{students[tableParam.studentId - 1].dateOfBirthday}}</td>
+                <td>{{students[tableParam.studentId - 1].studentYear}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <app-angular-paginator id="tableParams6" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentParam6Page = $event"></app-angular-paginator>
+          </div>
+          <div class="col-auto">
+            <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="resultTableItemsPerPage">
+              <ng-option *ngFor="let itemPageCount of itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+            </ng-select>
+            <h6><small>записей на странице</small></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

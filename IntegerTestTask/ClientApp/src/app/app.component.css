@@ -8,9 +8,21 @@
 .bg-primary-bs3,
 .badge-primary-bs3,
 .btn-primary-bs3,
+.thead-primary-bs3,
 .btn-outline-primary-bs3:hover{
   background-color: #428bca;
   color: #fff;
+}
+
+.page-link {
+  color: #428bca;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #428bca;
+  border-color: #428bca;
 }
 
 .btn-primary-bs3:hover {
@@ -18,9 +30,16 @@
   color: #fff;
 }
 
-
 .text-primary-bs3 {
   color: #428bca !important;
+}
+
+.form-control {
+  border: 1px solid #428bca;
+}
+
+.list-group-item {
+  border: 1px solid #428bca;
 }
 
 .main-content {
@@ -31,9 +50,32 @@
   border-bottom-color: #428bca;
 }
 
-.nav-tabs .nav-link.active  {
+.nav-tabs .nav-link {
+  color: #428bca;
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link.active {
   color: #fff;
   background-color: #428bca;
+  border-color: #428bca #428bca #fff;
+}
+
+.block-collapse .nav-tabs .nav-link.collapsed {
+  color: #428bca;
+  background-color: transparent;
+}
+
+.block-collapse .nav-tabs .nav-link {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.block-collapse .nav-tabs .nav-link:focus {
+  border-color: transparent;
+}
+
+.block-collapse .nav-tabs .nav-link:hover {
   border-color: #428bca #428bca #fff;
 }
 
@@ -124,6 +166,17 @@
 
 .material-icons.md-48 {
   font-size: 48px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, 
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  color: #428bca;
+  background-color: #fff;
 }
 
 @media screen and (min-width:768px) {

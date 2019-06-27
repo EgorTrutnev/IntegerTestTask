@@ -121,4 +121,8 @@
     <value>10000</value>
     <comment>Максимально допустимое количество шаров в коробке</comment>
   </data>
+  <data name="VersionProduct" xml:space="preserve">
+    <value>0.9</value>
+    <comment>Версия программного продукта</comment>
+  </data>
 </root>

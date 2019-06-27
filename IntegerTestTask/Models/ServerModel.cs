@@ -26,5 +26,6 @@ namespace IntegerTestTask.Models
     public class Settings
     {
         public int MaxBallsCount = Convert.ToInt32(Resources.MaxBallsCount);
+        public string VersionProduct = Resources.VersionProduct;
     }
 }
