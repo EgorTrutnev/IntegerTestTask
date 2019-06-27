@@ -127,8 +127,6 @@ namespace IntegerTestTask.Controllers
                     new
                     {
                         l.StudentId,
-                        l.Name,
-                        DateOfBirthday = l.DateOfBirthday.ToShortDateString(),
                         SumBirth = getSumDateOfBirthday(l.DateOfBirthday)
                     })
                     .Where(l => l.SumBirth < 40);
