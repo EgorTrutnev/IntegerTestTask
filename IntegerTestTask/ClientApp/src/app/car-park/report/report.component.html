@@ -1,0 +1,26 @@
+<div class="p-3 bg-white rounded shadow">
+  <div *ngIf="!report && !loadreportstatus" class="text-center">
+    <div class="spinner-border text-primary-bs3 " role="status">
+      <span class="sr-only">Загрузка...</span>
+    </div>
+  </div>
+  <div *ngIf="loadreportstatus" class="alert alert-arrow alert-arrow-danger d-flex rounded p-0" role="alert">
+    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+      <i class="material-icons md-24">
+        cancel
+      </i>
+    </div>
+    <div class="alert-message align-items-center py-2 pl-4 pr-3">
+      Во время загрузки отчёта произошла ошибка получения данных. Дальнейшее использование страницы <b>невозможно</b>!
+    </div>
+  </div>
+  <div *ngIf="report && !loadreportstatus" >
+    <h4 class="border-bottom border-gray pb-2 mb-0">Отчёт</h4>
+    <br>
+    <ul>
+      <li>В автопарке зарегистрировано <b>{{report.totalCars}} {{carParkComponent.DeclOfNum(report.totalCars, ['автомобиль', 'автомобиля', 'автомобилей'])}}</b> с <b>{{report.totalTechInspection}} тех. {{carParkComponent.DeclOfNum(report.totalTechInspection, ['осмотром', 'осмотрами', 'осмотрами'])}}</b>.</li>
+      <li>Из них <b>{{report.carsOver3Year}} {{carParkComponent.DeclOfNum(report.carsOver3Year, ['автомобиль', 'автомобиля', 'автомобилей'])}}</b> старше 3 лет.</li>
+      <li>Новее 3 лет: <b>{{report.carsUnder3Year}} {{carParkComponent.DeclOfNum(report.carsUnder3Year, ['автомобиль', 'автомобиля', 'автомобилей'])}}</b>.</li>
+    </ul>
+  </div>
+</div>

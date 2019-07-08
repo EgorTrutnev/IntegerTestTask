@@ -56,7 +56,7 @@
             <span class="sr-only">Загрузка...</span>
           </div>
         </div>
-        <div *ngIf="students && subjectsOfStudy && !loadtablesstatus">
+        <div *ngIf="students && subjectsOfStudy && learningOutcomes && !loadtablesstatus">
           <div class="overflow-auto">
             <table class="table table-striped table-bordered bg-white h6">
               <thead class="thead-primary-bs3 font-weight-bold">
@@ -231,7 +231,7 @@
   <div *ngIf="!statusload && successloadresult">
     <hr>
     <div class="my-3 p-3 bg-white rounded shadow">
-      <h3 class="border-bottom border-gray pb-2 mb-0 text-center result-head">Результат</h3>
+      <h3 class="border-bottom pb-2 mb-0 text-center result-head-text">Результат</h3>
       <br>
 
       <div *ngIf="tableParams.length == 0" class="alert alert-arrow alert-arrow-warning d-flex rounded p-0" role="alert">
@@ -252,6 +252,7 @@
               <tr>
                 <td>№</td>
                 <td>ФИО студента</td>
+                <td>Дата рождения</td>
                 <td>Предмет</td>
                 <td>Балл</td>
               </tr>
@@ -260,7 +261,8 @@
               <tr *ngFor="let tableParam of tableParams | angularPaginator: { id: 'tableParams1', itemsPerPage: resultTableItemsPerPage, currentPage: currentParam1Page }; let i = index">
                 <td>{{(currentParam1Page - 1) * resultTableItemsPerPage + i + 1}}</td>
                 <td>{{students[tableParam.studentId - 1].name}}</td>
-                <td>{{subjectsOfStudy[tableParam.subject - 1].title}}</td>
+                <td>{{students[tableParam.studentId - 1].dateOfBirthday}}</td>
+                <td>{{subjectsOfStudy[tableParam.subjectId - 1].title}}</td>
                 <td>{{tableParam.score}}</td>
               </tr>
             </tbody>

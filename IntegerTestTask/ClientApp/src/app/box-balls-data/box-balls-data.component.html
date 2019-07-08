@@ -176,84 +176,86 @@
   <div *ngIf="boxballs != null">
     <div *ngIf="boxballs.ballsCount && !statusload">
       <hr>
-      <div class="text-center">
-        <h2>Результат</h2>
-      </div>
-      <div class="result-head"></div>
-      <div class="p-3 shadow result-block">
-        <div class="rounded result-content">
-          <div class="p-3 rounded shadow">
-            <div class="row">
-              <div class="col-lg-3 col-sm-6 flex-block">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
-                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Всего шаров</h6>
-                  <br>
-                  <figure class="circle black-and-white figure-center"></figure>
-                  <h2 class="my-0">{{boxballs?.ballsCount}}</h2>
+      <div class="my-3 p-3 bg-white rounded shadow">
+        <h3 class="border-bottom border-gray pb-2 mb-0 text-center result-head-text">Результат</h3>
+        <br>
+        <div class="result-head"></div>
+        <div class="p-3 shadow result-block">
+          <div class="rounded result-content">
+            <div class="p-3 rounded shadow">
+              <div class="row">
+                <div class="col-lg-3 col-sm-6 flex-block">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                    <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Всего шаров</h6>
+                    <br>
+                    <figure class="circle black-and-white figure-center"></figure>
+                    <h2 class="my-0">{{boxballs?.ballsCount}}</h2>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 flex-block">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                    <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Концентрация</h6>
+                    <br>
+                    <figure class="circle concentration" figure-center></figure>
+                    <h2 class="my-0">{{boxballs?.concentration}}</h2>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 flex-block">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                    <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Чёрных шаров</h6>
+                    <br>
+                    <figure class="circle black" figure-center></figure>
+                    <h2 class="my-0">{{boxballs?.blackBalls}}</h2>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 flex-block">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
+                    <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Белых шаров</h6>
+                    <br>
+                    <figure class="circle white" figure-center></figure>
+                    <h2 class="my-0">{{boxballs?.whiteBalls}}</h2>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-3 col-sm-6 flex-block">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
-                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Концентрация</h6>
-                  <br>
-                  <figure class="circle concentration" figure-center></figure>
-                  <h2 class="my-0">{{boxballs?.concentration}}</h2>
+              <div *ngIf="boxballs.blackBallsNumbers.length > 0 && boxballs.whiteBallsNumbers.length > 0" class="row">
+                <div *ngIf="boxballs.blackBallsNumbers.length > 0" class="col-12">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Чёрные шары с номерами</h6>
+                    <br>
+                    <div class="form-group">
+                      <figure class="circle black" *ngFor="let blackBallsNumber of boxballs.blackBallsNumbers">
+                        <div class="text-center figure-number">{{blackBallsNumber}}</div>
+                      </figure>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 flex-block">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
-                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Чёрных шаров</h6>
-                  <br>
-                  <figure class="circle black" figure-center></figure>
-                  <h2 class="my-0">{{boxballs?.blackBalls}}</h2>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 flex-block">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow text-center">
-                  <h6 class="border-bottom border-gray pb-2 mb-0 overflow-hidden">Белых шаров</h6>
-                  <br>
-                  <figure class="circle white" figure-center></figure>
-                  <h2 class="my-0">{{boxballs?.whiteBalls}}</h2>
+                <div *ngIf="boxballs.whiteBallsNumbers.length > 0" class="col-12">
+                  <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Белые шары с номерами</h6>
+                    <br>
+                    <div class="form-group">
+                      <figure class="circle white" *ngFor="let whiteBallsNumbers of boxballs.whiteBallsNumbers">
+                        <div class="text-center figure-number">{{whiteBallsNumbers}}</div>
+                      </figure>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div *ngIf="boxballs.blackBallsNumbers.length > 0 && boxballs.whiteBallsNumbers.length > 0" class="row">
-              <div *ngIf="boxballs.blackBallsNumbers.length > 0" class="col-12">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
-                  <h6 class="border-bottom border-gray pb-2 mb-0">Чёрные шары с номерами</h6>
-                  <br>
-                  <div class="form-group">
-                    <figure class="circle black" *ngFor="let blackBallsNumber of boxballs.blackBallsNumbers">
-                      <div class="text-center figure-number">{{blackBallsNumber}}</div>
-                    </figure>
-                  </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="coll-12">
+            <div class="p-3">
+              <div class="alert alert-arrow alert-arrow-primary-bs3 div-shadow d-flex rounded p-0" role="alert">
+                <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
+                  <i class="material-icons md-24">
+                    info
+                  </i>
                 </div>
-              </div>
-              <div *ngIf="boxballs.whiteBallsNumbers.length > 0" class="col-12">
-                <div class="my-3 p-3 bg-primary-bs3 rounded div-shadow circle-box">
-                  <h6 class="border-bottom border-gray pb-2 mb-0">Белые шары с номерами</h6>
-                  <br>
-                  <div class="form-group">
-                    <figure class="circle white" *ngFor="let whiteBallsNumbers of boxballs.whiteBallsNumbers">
-                      <div class="text-center figure-number">{{whiteBallsNumbers}}</div>
-                    </figure>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="coll-12">
-                <div class="p-3">
-                  <div class="alert alert-arrow alert-arrow-primary-bs3 div-shadow d-flex rounded p-0" role="alert">
-                    <div class="alert-icon d-flex justify-content-center align-items-center text-white flex-grow-0 flex-shrink-0">
-                      <i class="material-icons md-24">
-                        info
-                      </i>
-                    </div>
-                    <div class="alert-message align-items-center py-2 pl-4 pr-3">
-                      Данные сформированы с использованием <b>Web API</b> на основании запроса "<b>https://localhost:5001/{{url}}</b>".
-                    </div>
-                  </div>
+                <div class="alert-message align-items-center py-2 pl-4 pr-3">
+                  Данные сформированы с использованием <b>Web API</b> на основании запроса "<b>https://localhost:5001/{{url}}</b>".
                 </div>
               </div>
             </div>

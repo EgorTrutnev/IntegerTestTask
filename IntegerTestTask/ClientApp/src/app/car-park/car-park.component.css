@@ -1,0 +1,40 @@
+.invalid-tooltip {
+  top: auto;
+}
+
+.btn .material-icons {
+  vertical-align: sub;
+  margin-right: 5px;
+}
+
+.modal-footer, .modal-header {
+  color: #fff;
+}
+
+.modal-footer.danger, .modal-header.danger {
+  background-color: maroon;
+}
+
+.modal-footer.primary, .modal-header.primary {
+  background-color: #1f5e95;
+}
+
+.modal-footer.success, .modal-header.success {
+  background-color: #01771c;
+}
+
+.modal-header .close, .modal-header .close {
+  color: #fff;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}
+
+.table tbody td a i {
+  padding: 0 5px;
+}
+
+.modal .modal-body .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}

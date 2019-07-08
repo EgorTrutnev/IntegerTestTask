@@ -12,8 +12,7 @@ namespace IntegerTestTask.Models
         public int StudentId { get; set; }
 
         [Required]
-        [MinLength(6)]
-        [MaxLength(64)]
+        [Range(6,64)]
         public string Name { get; set; }
 
         [Column(TypeName = "date")]

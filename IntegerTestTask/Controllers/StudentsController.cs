@@ -62,22 +62,24 @@ namespace IntegerTestTask.Controllers
             if (param == 1)
             {
                 DateTime USSRBreakupDate = new DateTime(1991, 4, 26);
+                string subject = "Информатика";
+                List<string> thead = new List<string>() { "ФИО студента", "Дата рождения", "Предмет", "Балл" };
 
                 var result = _context.Students
                     .Where(u => u.DateOfBirthday < USSRBreakupDate)
                     .Select(u => u.StudentId)
                     .SelectMany(e => _context.LearningOutcomes
                         .Where(l => l.SubjectId == _context.SubjectsOfStudy
-                            .Where(s => s.Title == "Информатика")
+                            .Where(s => s.Title == subject)
                             .Select(s => s.SubjectId)
-                            .First() && l.Score >= 3)
+                            .FirstOrDefault() && l.Score >= 3)
                         .Where(l => l.StudentId == e)
                         .Select(fl => new
                         {
-                            id = fl.Id,
-                            studentId = fl.StudentId,
-                            subject = fl.SubjectId,
-                            score = fl.Score
+                            fl.Id,
+                            fl.StudentId,
+                            fl.SubjectId,
+                            fl.Score
                         }));
 
                 return Ok(await result.ToListAsync());
@@ -127,7 +129,7 @@ namespace IntegerTestTask.Controllers
                     new
                     {
                         l.StudentId,
-                        SumBirth = getSumDateOfBirthday(l.DateOfBirthday)
+                        SumBirth = GetSumDateOfBirthday(l.DateOfBirthday)
                     })
                     .Where(l => l.SumBirth < 40);
 
@@ -143,7 +145,7 @@ namespace IntegerTestTask.Controllers
             return Json(new Error(2016, $"Сортировки с номером параметра ('param' = {param}) не существует в текущей выборке."));
         }
 
-        int getSumDateOfBirthday (DateTime dateTime) =>
+        int GetSumDateOfBirthday(DateTime dateTime) =>
             dateTime.ToShortDateString().Replace(".", "")
                 .Select(x => (int)char.GetNumericValue(x)).ToArray()
                 .Aggregate((x, y) => x + y);

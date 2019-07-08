@@ -14,18 +14,33 @@ import { BoxBallsSchemeAlg1Component } from './box-balls-scheme/algorithm1/algor
 import { BoxBallsSchemeAlg2Component } from './box-balls-scheme/algorithm2/algorithm2.component';
 import { BoxBallsDataComponent } from './box-balls-data/box-balls-data.component';
 import { SampleTableComponent } from './sample-table/sample-table.component';
+import { CarParkComponent } from './car-park/car-park.component';
+import { CarComponent } from './car-park/car/car.component';
+import { TechInspectionComponent } from './car-park/techinspection/techinspection.component';
+import { ReportComponent } from './car-park/report/report.component';
+import { TaskProject } from './task/task.component';
+import { GitHubLog } from './github-log/github-log.component';
 import { NotFoundComponent } from './not-found/not-found.component';
  
 const BoxBallsAlgorithmRoutes: Routes = [
   { path: '', component: BoxBallsSchemeAlg1Component },
-  { path: 'alg2', component: BoxBallsSchemeAlg2Component },
+  { path: 'alg2', component: BoxBallsSchemeAlg2Component }
+];
+
+const CarParkRoutes: Routes = [
+  { path: '', component: CarComponent },
+  { path: 'techinspection', component: TechInspectionComponent },
+  { path: 'report', component: ReportComponent }
 ];
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'box-balls-scheme', component: BoxBallsSchemeComponent, children: BoxBallsAlgorithmRoutes },
   { path: 'box-balls-data', component: BoxBallsDataComponent },
-  { path: 'sample-table', component: SampleTableComponent },
+  { path: 'sample-tables', component: SampleTableComponent },
+  { path: 'car-park-tables', component: CarParkComponent, children: CarParkRoutes },
+  { path: 'task', component: TaskProject },
+  { path: 'github-log', component: GitHubLog },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -39,6 +54,12 @@ const appRoutes: Routes = [
     BoxBallsSchemeAlg2Component,
     BoxBallsDataComponent,
     SampleTableComponent,
+    CarParkComponent,
+    CarComponent,
+    TechInspectionComponent,
+    ReportComponent,
+    GitHubLog,
+    TaskProject,
     NotFoundComponent
   ],
   imports: [

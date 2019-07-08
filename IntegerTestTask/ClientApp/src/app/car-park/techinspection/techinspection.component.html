@@ -1,0 +1,206 @@
+<div class="p-3 bg-white rounded shadow">
+  <div *ngIf="cars.length == 0 || techInspection.length == 0; else loaded" class="text-center">
+    <div class="spinner-border text-primary-bs3 " role="status">
+      <span class="sr-only">Загрузка...</span>
+    </div>
+  </div>
+  <ng-template #loaded>
+    <h4 class="border-bottom border-gray pb-2 mb-0">Таблица тех. осмотров автомобилей, числящихся в автопарке</h4>
+    <div class="row">
+      <div class="col-auto p-3">
+        <a href="#modalTechInspectionAdd" (click)="add()" class="btn btn-primary-bs3" data-toggle="modal"><i class="material-icons md-18">add_circle</i> <span>Добавить</span></a>
+      </div>
+    </div>
+    <div class="overflow-auto">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-primary-bs3 font-weight-bold">
+          <tr>
+            <td>№</td>
+            <td>Автомобиль</td>
+            <td>Номер карты</td>
+            <td>Дата тех. осмотра</td>
+            <td>Замечания</td>
+            <td>Действия</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ti of techInspections | angularPaginator: { id:'tableTechInspections', itemsPerPage: carParkComponent.tableItemsPerPage, currentPage: currentPage }; let i = index">
+            <td>{{(currentPage - 1) * carParkComponent.tableItemsPerPage + i + 1}}</td>
+            <td>{{findCar(ti.carId)?.model}}<br><small>({{findCar(ti.carId)?.stateNumber}})</small></td>
+            <td>{{ti.cardNumber}}</td>
+            <td>{{ti.dateTechInspection | date: 'dd.MM.yyyy'}}</td>
+            <td class="text-danger" *ngIf="ti.comment; else noReport">{{ti.comment}}</td>
+            <ng-template #noReport>
+              <td class="text-success">Замечаний нет</td>
+            </ng-template>
+            <td>
+              <a href="#modalTechInspectionEdit" (click)="editTechInspection(ti)" class="text-success" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Редактировать">create</i></a>
+              <a href="#modalTechInspectionDelete" (click)="modalDelete(ti)" class="text-danger" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Удалить">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col">
+        <app-angular-paginator id="tableTechInspections" firstText="<<" previousText="<" nextText=">" lastText=">>" (pageChange)="currentPage = $event"></app-angular-paginator>
+      </div>
+      <div class="col-auto">
+        <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="carParkComponent.tableItemsPerPage">
+          <ng-option *ngFor="let itemPageCount of carParkComponent.itemsPageCount" [value]="itemPageCount">{{itemPageCount}}</ng-option>
+        </ng-select>
+        <h6><small>записей на странице</small></h6>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div *ngIf="cars && delTechInspection" class="modal fade" id="modalTechInspectionDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header danger">
+        <h5 class="modal-title" id="exampleModalLabel">Подтверждение удаления</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы собираетесь удалить тех. осмотр с номером карты <b>{{delTechInspection.cardNumber}}</b>, проведённый <b>{{delTechInspection.dateTechInspection | date: 'dd MMMM yyyy'}}</b><span *ngIf="delTechInspection.comment"> с замечаниями: "<b>{{delTechInspection.comment}}</b>"</span><span *ngIf="!delTechInspection.comment"> без замечений</span> у автомобиля "<b>{{selectedCar?.model}}</b> (<b>{{selectedCar?.year}}</b>)" c гос. номером "<b>{{selectedCar?.stateNumber}}</b>".</p>
+        <p class="text-danger"><small>Это действие нельзя будет отменить!</small></p>
+      </div>
+      <div class="modal-footer danger">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Отмена</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete(delTechInspection)">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cars && techInspection" class="modal fade" id="modalTechInspectionAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate>
+        <div class="modal-header primary">
+          <h5 class="modal-title" id="exampleModalLabel">Добавление тех. осмотра</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="validcar">Автомобиль</label>
+            <ng-select [(ngModel)]="techInspection.carId"
+                       [items]="cars"
+                       bindLabel="model"
+                       bindValue="carId"
+                       labelForId="car"
+                       placeholder="Выберите автомобиль..."
+                       name="car" required>
+              <ng-template ng-option-tmp let-item="item">
+                {{item.model}} <br />
+                <small>№: <b>{{item.stateNumber}}</b>, год: <b>{{item.year}}</b></small>
+              </ng-template>
+              <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+                <div class="ng-option disabled">
+                  Нет совпадений по "{{searchTerm}}"
+                </div>
+              </ng-template>
+            </ng-select>
+            <div class="invalid-tooltip">
+              Поле "Автомобиль" обязательно для заполнения!
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="validtechcardNumber">Номер карты</label>
+            <input id="validtechcardNumber" type="text" maxlength="64" [(ngModel)]="techInspection.cardNumber" name="techInspectionCardNumber" class="form-control" placeholder="Номер карты" required />
+            <div class="invalid-tooltip">
+              Поле "Номер карты" обязательно для заполнения!
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="validdatetechinspection">Дата тех. осмотра</label>
+            <input id="validdatetechinspection" type="date" max="{{carParkComponent?.getDateToday()}}" min="1950-01-01" [(ngModel)]="techInspection.dateTechInspection" name="datetechinspection" class="form-control" placeholder="Дата тех. осмотра" required />
+            <div class="invalid-tooltip">
+              Поле "Дата тех. осмотра" обязательно для заполнения!
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="validtechInspectioncomment">Замечания</label>
+            <textarea id="validtechInspectioncomment" [(ngModel)]="techInspection.comment" name="techInspectioncomment" class="form-control" rows="3" placeholder="Замечания"></textarea>
+            <small class="text-secondary">Поле можно оставить пустым.</small>
+          </div>
+        </div>
+        <div class="modal-footer primary">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Отмена</button>
+          <button type="submit" class="btn btn-primary-bs3" (click)="save()">Добавить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cars && techInspection" class="modal fade" id="modalTechInspectionEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div>
+        <form class="needs-validation" novalidate>
+          <div class="modal-header success">
+            <h5 class="modal-title" id="exampleModalLabel">Редактирование тех. осмотра</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="validcar">Автомобиль</label>
+              <ng-select id="validcar"
+                         [(ngModel)]="techInspection.carId"
+                         [items]="cars"
+                         bindLabel="model"
+                         bindValue="carId"
+                         placeholder="Выберите автомобиль..."
+                         name="car">
+                <ng-template ng-option-tmp let-item="item">
+                  {{item.model}} <br />
+                  <small>№: <b>{{item.stateNumber}}</b>, год: <b>{{item.year}}</b></small>
+                </ng-template>
+                <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+                  <div class="ng-option disabled">
+                    Нет совпадений по "{{searchTerm}}"
+                  </div>
+                </ng-template>
+              </ng-select>
+              <div class="invalid-tooltip">
+                Поле "Автомобиль" обязательно для заполнения!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="validtechcardNumber">Номер карты</label>
+              <input id="validtechcardNumber" type="text" maxlength="64" [(ngModel)]="techInspection.cardNumber" name="techInspectionCardNumber" class="form-control" placeholder="Номер карты" required />
+              <div class="invalid-tooltip">
+                Поле "Номер карты" обязательно для заполнения!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="validdatetechinspection">Дата тех. осмотра</label>
+              <input id="validdatetechinspection" type="date" max="{{carParkComponent?.getDateToday()}}" min="1950-01-01" [(ngModel)]="techInspection.dateTechInspection" name="datetechinspection" class="form-control" placeholder="Дата тех. осмотра" required />
+              <div class="invalid-tooltip">
+                Поле "Дата тех. осмотра" обязательно для заполнения!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="validtechInspectioncomment">Замечания</label>
+              <textarea id="validtechInspectioncomment" [(ngModel)]="techInspection.comment" name="techInspectioncomment" class="form-control" rows="3" placeholder="Замечания"></textarea>
+              <small class="text-secondary">Поле можно оставить пустым.</small>
+            </div>
+          </div>
+          <div class="modal-footer success">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Отмена</button>
+            <button type="submit" class="btn btn-success" (click)="save()">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
